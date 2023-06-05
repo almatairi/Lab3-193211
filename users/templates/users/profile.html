@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block title %}View {{profile.username}} profile{% endblock title %}
+
+{% block content %}
+<img src="{{profile.profile_image.url}}" alt="">
+<h3>{{profile.username}}</h3>
+
+<h1>POSTS</h1>
+{% for post in posts %}
+<a href="{% url 'singlePost' post.id %}">
+    <img src="{{post.post_image.url}}" width="1250" height="auto" />
+    <h2>{{post.title}}</h2>
+    {% if post.caption %}
+    <p>{{post.caption}}</p>
+    {% endif %}
+    {% if post.location %}
+    <h5>{{post.location}}</h5>
+    {% endif %}
+    <p>{{post.created}}</p>
+    </a>
+{% endfor %}
+{% endblock content %}

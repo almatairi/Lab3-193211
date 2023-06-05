@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block title %}Edit {{post.title}}{% endblock title %}
+
+{% block content %}
+Edit {{ post.title }}
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Edit Post" />
+</form>
+{% endblock content %}

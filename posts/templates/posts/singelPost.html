@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block title %} {{post.title}} {% endblock title %}
+
+{% block content %}
+<img src="{{post.file.url}}" />
+<h3>{{post.title}}</h3>
+{% if post.caption %}
+<p>{{post.caption}}</p>
+{% endif %}
+
+<p>{{post.created}}</p>
+<p><a href="profile.html">{{post.owner}}</a></p>
+
+<h2>Comments</h2>
+{% for comment in comments %}
+    <p>{{comment}}</p>
+    {% if user.id == comment.user.pk or post.owner == request.user.profile %}
+        <small><a href="{% url 'delete-comment' comment.pk %}">Delete</a></small>
+    {% endif %}
+{% endfor %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ commentForm.as_p }}
+    <input type="submit" value="comment">
+</form>
+
+
+{% endblock content %}

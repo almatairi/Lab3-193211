@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% block title %} Home Page {% endblock title %}
+
+{% block content %}
+
+    {% for post in page_obj %}
+    <a href="{% url 'singlePost' post.id %}">
+        <h2>{{post.title}}</h2>
+        {% if post.caption %}
+        <p>{{post.caption}}</p>
+        {% endif %}
+        {% if post.location %}
+        <h5>{{post.location}}</h5>
+        {% endif %}
+        <p>{{post.created}}</p>
+        {% if post.owner == request.user.profile %}
+            <a href="{% url 'edit' post.id %}">Edit Post</a>
+            <a href="{% url 'delete' post.id %}">Delete Post</a>
+        {% endif %}
+        <br>
+        {% if post.owner == request.user.profile %}
+            <p>You cant like your own post</p>
+        {% else %}
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="?search_query={{search_query}}&page={{page}}">
+                {% csrf_token %}
+                <a name="next" href="{% url 'like' post.id %}">Like {{post.likes}}</a>
+            </form>
+            {% else %}
+                <a href="{% url 'login' %}">Log In to like this post </a>
+            </a>
+            {% endif %}
+        {% endif %}
+        <p><a href="{% url 'profile' post.owner.id %}">{{post.owner}}</a></p>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?search_query={{search_query}}&page={{page.obj.previous_page_number}}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of 
+                {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?search_query={{search_query}}&page={{ page_obj.next_page_number }}">next</a>
+                <a href="?search_query={{search_query}}&page={{ page_obj.paginator.num_pages}}">
+                    last &raquo;
+                </a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock content %}

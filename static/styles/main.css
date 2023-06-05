@@ -1,0 +1,30 @@
+.searchbar {
+    overflow: hidden;
+    margin-left: 700px;
+  }
+.searchbar .search-container {
+    float: left;
+  }
+  
+  .searchbar input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 20px;
+    border: 1px solid black;
+  }
+  
+  .searchbar .search-container button {
+    float: left;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .searchbar .search-container button:hover {
+    background: #ccc;
+  }
+
